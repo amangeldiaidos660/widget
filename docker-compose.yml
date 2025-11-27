@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: feedback
+      POSTGRES_USER: feedback_user
+      POSTGRES_PASSWORD: feedback_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    command: gunicorn core.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    environment:
+      SECRET_KEY: "django-insecure-1234567890"
+      DEBUG: "True"
+      ALLOWED_HOSTS: "*"
+      DB_NAME: "feedback"
+      DB_USER: "feedback_user"
+      DB_PASSWORD: "feedback_pass"
+      DB_HOST: "postgres"
+      DB_PORT: "5432"
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+
+  frontend-portal:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+
+volumes:
+  postgres_data:
