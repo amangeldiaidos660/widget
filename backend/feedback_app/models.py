@@ -109,6 +109,9 @@ class Ticket(models.Model):
         blank=True,
         verbose_name="Разрешение экрана"
     )
+    console_logs = models.TextField(blank=True, null=True, verbose_name="Логи консоли")
+    network_errors = models.TextField(blank=True, null=True, verbose_name="Сетевые ошибки")
+    js_errors = models.TextField(blank=True, null=True, verbose_name="JS-ошибки")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создана")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлена")
     assigned_to = models.ForeignKey(

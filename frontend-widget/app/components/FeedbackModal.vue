@@ -39,6 +39,7 @@ const emit = defineEmits(['close']);
 const name = ref('');
 const contact = ref('');
 const description = ref('');
+const loading = ref(false);
 
 onMounted(() => {
   name.value = localStorage.getItem('name') || '';
@@ -46,12 +47,44 @@ onMounted(() => {
 });
 
 const close = () => emit('close');
-const canSubmit = computed(() => contact.value && description.value && description.value.length >= 10);
-const submit = () => {
-  localStorage.setItem('name', name.value);
-  localStorage.setItem('contact', contact.value);
-  console.log({ name: name.value, contact: contact.value, description: description.value, project_slug: projectSlug.value });
-  close();
+const canSubmit = computed(() => contact.value && description.value && description.value.length >= 10 && !loading.value);
+const submit = async () => {
+  loading.value = true;
+  try {
+    const payload = {
+      project_slug: projectSlug.value,
+      author_name: name.value.trim() || null,
+      author_email: contact.value.trim() || null,
+      author_login: '',
+      description: description.value,
+      page_url: window.location.href,
+      user_agent: navigator.userAgent,
+      screen_resolution: `${window.screen.width}x${window.screen.height}`,
+      console_logs: JSON.stringify(window.__FEEDBACK_LOGS__ || []),
+      network_errors: JSON.stringify(window.__FEEDBACK_NETWORK_ERRORS__ || []),
+      js_errors: JSON.stringify(window.__FEEDBACK_JS_ERRORS__ || [])
+    };
+    const response = await fetch('http://localhost:8000/api/tickets/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    if (response.ok && data.ticket_id) {
+      localStorage.setItem('name', name.value);
+      localStorage.setItem('contact', contact.value);
+      close();
+      setTimeout(() => {
+        alert(`Ваша заявка №${data.ticket_id} принята! Спасибо!`);
+      }, 200);
+    } else {
+      alert('Ошибка при отправке заявки. Попробуйте позже.');
+    }
+  } catch (e) {
+    alert('Ошибка сети. Попробуйте позже.');
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 
