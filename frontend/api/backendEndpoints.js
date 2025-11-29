@@ -11,6 +11,7 @@ export const API_ENDPOINTS = {
   token: `${BACKEND_BASE_URL}/api/token/`,
   tokenRefresh: `${BACKEND_BASE_URL}/api/token/refresh/`,
   currentUser: `${BACKEND_BASE_URL}/api/user/`,
+  staffUsers: `${BACKEND_BASE_URL}/api/users/staff/`,
   
   // Projects
   projects: `${BACKEND_BASE_URL}/api/projects/`,

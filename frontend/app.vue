@@ -1,6 +1,7 @@
 <template>
   <div>
     <NuxtRouteAnnouncer />
+    <PortalHeader v-if="authStore.isAuthenticated || (authStore.user && authStore.token)" />
     <NuxtPage />
   </div>
 </template>

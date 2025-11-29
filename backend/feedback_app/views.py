@@ -20,3 +20,11 @@ def current_user(request):
 	"""Эндпоинт для получения информации о текущем пользователе"""
 	serializer = UserSerializer(request.user)
 	return Response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def staff_users(request):
+	"""Эндпоинт для получения списка staff пользователей (сотрудников)"""
+	staff_users_list = User.objects.filter(is_staff=True).order_by('username')
+	serializer = UserSerializer(staff_users_list, many=True)
+	return Response(serializer.data)

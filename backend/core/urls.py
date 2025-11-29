@@ -27,7 +27,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from feedback_app.views import health, current_user
+from feedback_app.views import health, current_user, staff_users
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +37,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/user/', current_user, name='current_user'),
+    path('api/users/staff/', staff_users, name='staff_users'),
     
     path('api/', include('feedback_app.urls')),
     
