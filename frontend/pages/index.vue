@@ -1,30 +1,38 @@
 <template>
-  <div class="container-fluid mt-4">
-    <h1 class="mb-4">Портал заявок</h1>
-    
-    <!-- Статистика -->
-    <TicketsStats :stats="stats" />
-    
-    <!-- Фильтры -->
-    <TicketsFilters
-      :filters="filters"
-      @update="handleFiltersUpdate"
-    />
-    
-    <!-- Таблица -->
-    <TicketsTable
-      :tickets="tickets"
-      :loading="loading"
-      @select="handleTicketSelect"
-    />
-    
-    <!-- Пагинация -->
-    <div class="mt-4">
-      <TicketsPagination
-        :current-page="currentPage"
-        :total-pages="totalPages"
-        @change="handlePageChange"
-      />
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <span class="navbar-brand">Портал заявок</span>
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item me-2">
+            <NuxtLink to="/ProjectsCreate" class="btn btn-light btn-sm">
+              Создать проект
+            </NuxtLink>
+          </li>
+          <li class="nav-item dropdown me-2">
+            <span class="nav-link dropdown-toggle text-white" role="button">
+              {{ authStore.user?.username || 'Пользователь' }}
+            </span>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light btn-sm" @click="handleLogout" type="button">
+              Выход
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container-fluid mt-4">
+      <!-- Статистика -->
+      <TicketsStats :stats="stats" />
+      <!-- Фильтры -->
+      <TicketsFilters :filters="filters" @update="handleFiltersUpdate" />
+      <!-- Таблица -->
+      <TicketsTable :tickets="tickets" :loading="loading" @select="handleTicketSelect" />
+      <!-- Пагинация -->
+      <div class="mt-4">
+        <TicketsPagination :current-page="currentPage" :total-pages="totalPages" @change="handlePageChange" />
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +50,11 @@ const router = useRouter()
 
 // Инициализируем store
 authStore.init()
+
+const handleLogout = () => {
+  authStore.logout()
+  router.push('/login')
+}
 
 // Состояние
 const tickets = ref([])
@@ -131,8 +144,8 @@ const handlePageChange = (page: number) => {
 }
 
 const handleTicketSelect = (ticket: any) => {
-  // Переход на страницу заявки (пока 404, но роут готовим)
-  router.push(`/tickets/${ticket.id}`)
+  // Переход на страницу детальной заявки
+  router.push(`/TicketDetail?id=${ticket.id}`)
 }
 
 // Загружаем заявки при монтировании

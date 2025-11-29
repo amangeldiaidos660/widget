@@ -27,7 +27,10 @@ class TicketAdmin(admin.ModelAdmin):
         'author_name',
         'author_email',
         'assigned_to',
-        'created_at'
+        'created_at',
+        'short_console_logs',
+        'short_network_errors',
+        'short_js_errors',
     ]
     list_filter = ['status', 'project', 'created_at', 'assigned_to']
     search_fields = [
@@ -35,11 +38,36 @@ class TicketAdmin(admin.ModelAdmin):
         'author_name',
         'author_email',
         'author_login',
-        'description'
+        'description',
+        'console_logs',
+        'network_errors',
+        'js_errors',
     ]
     readonly_fields = ['ticket_id', 'created_at', 'updated_at']
     date_hierarchy = 'created_at'
     raw_id_fields = ['project', 'assigned_to']
+    fieldsets = (
+        (None, {
+            'fields': (
+                'ticket_id', 'project', 'status', 'author_name', 'author_email', 'author_login',
+                'description', 'page_url', 'user_agent', 'screen_resolution',
+                'console_logs', 'network_errors', 'js_errors',
+                'assigned_to', 'created_at', 'updated_at'
+            )
+        }),
+    )
+
+    def short_console_logs(self, obj):
+        return (obj.console_logs[:75] + '...') if obj.console_logs and len(obj.console_logs) > 75 else obj.console_logs
+    short_console_logs.short_description = 'console_logs'
+
+    def short_network_errors(self, obj):
+        return (obj.network_errors[:75] + '...') if obj.network_errors and len(obj.network_errors) > 75 else obj.network_errors
+    short_network_errors.short_description = 'network_errors'
+
+    def short_js_errors(self, obj):
+        return (obj.js_errors[:75] + '...') if obj.js_errors and len(obj.js_errors) > 75 else obj.js_errors
+    short_js_errors.short_description = 'js_errors'
 
 
 @admin.register(Attachment)

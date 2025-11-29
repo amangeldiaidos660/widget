@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtRouteAnnouncer />
-    <PortalHeader v-if="authStore.isAuthenticated || (authStore.user && authStore.token)" />
+    <!-- PortalHeader удалён, навигация теперь в index.vue -->
     <NuxtPage />
   </div>
 </template>

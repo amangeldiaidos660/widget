@@ -10,7 +10,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ['id', 'name', 'slug', 'is_active', 'created_at']
-        read_only_fields = ['id', 'name', 'slug', 'is_active', 'created_at']
+        read_only_fields = ['id', 'created_at']
 
 
 class AttachmentSerializer(serializers.ModelSerializer):
@@ -87,6 +87,7 @@ class TicketDetailSerializer(serializers.ModelSerializer):
             'id', 'ticket_id', 'project', 'project_name', 'project_slug',
             'status', 'author_name', 'author_email', 'author_login',
             'description', 'page_url', 'user_agent', 'screen_resolution',
+            'console_logs', 'network_errors', 'js_errors',  # <-- добавить эти поля
             'assigned_to', 'assigned_to_username', 'created_at', 'updated_at',
             'attachments', 'comments'
         ]

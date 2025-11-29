@@ -64,12 +64,16 @@ const submit = async () => {
       network_errors: JSON.stringify(window.__FEEDBACK_NETWORK_ERRORS__ || []),
       js_errors: JSON.stringify(window.__FEEDBACK_JS_ERRORS__ || [])
     };
+    console.log('Отправляем payload:', payload);
     const response = await fetch('http://localhost:8000/api/tickets/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    const data = await response.json();
+    const text = await response.text();
+    let data;
+    try { data = JSON.parse(text); } catch { data = text; }
+    console.log('Ответ сервера:', data);
     if (response.ok && data.ticket_id) {
       localStorage.setItem('name', name.value);
       localStorage.setItem('contact', contact.value);
@@ -78,10 +82,11 @@ const submit = async () => {
         alert(`Ваша заявка №${data.ticket_id} принята! Спасибо!`);
       }, 200);
     } else {
-      alert('Ошибка при отправке заявки. Попробуйте позже.');
+      alert('Ошибка при отправке заявки: ' + JSON.stringify(data));
     }
   } catch (e) {
     alert('Ошибка сети. Попробуйте позже.');
+    console.error(e);
   } finally {
     loading.value = false;
   }

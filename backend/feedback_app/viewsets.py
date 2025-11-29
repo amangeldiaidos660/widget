@@ -17,11 +17,11 @@ from .serializers import (
 from .permissions import IsAdminOrReadOnly, IsAssignedOrAdmin, IsAuthenticatedForWrite
 
 
-class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
+class ProjectViewSet(viewsets.ModelViewSet):
     """
-    ViewSet для проектов (только чтение, только активные для виджета).
+    ViewSet для проектов (CRUD, только активные для виджета).
     """
-    queryset = Project.objects.filter(is_active=True)
+    queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [IsAdminOrReadOnly]
     lookup_field = 'slug'
@@ -59,7 +59,7 @@ class TicketViewSet(viewsets.ModelViewSet):
     - destroy (опционально)
     """
     queryset = Ticket.objects.all()
-    permission_classes = [IsAuthenticatedForWrite]
+    permission_classes = []  # Снимаем все ограничения, доступно всем
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_class = TicketFilter
     search_fields = ['ticket_id', 'description', 'author_email', 'author_name']
@@ -84,8 +84,13 @@ class TicketViewSet(viewsets.ModelViewSet):
     
     def create(self, request, *args, **kwargs):
         """Создание заявки (доступно анониму)"""
+        print('DEBUG: Получен payload:', request.data)
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception as e:
+            print('DEBUG: Ошибка валидации:', serializer.errors)
+            raise
         ticket = serializer.save()
         
         # Возвращаем полный объект с детальным сериализатором
