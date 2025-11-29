@@ -23,11 +23,21 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView
 )
-from feedback_app.views import health
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from feedback_app.views import health, current_user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/health/', health),
+    
+    # JWT Token endpoints
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/user/', current_user, name='current_user'),
+    
     path('api/', include('feedback_app.urls')),
     
     # OpenAPI schema
