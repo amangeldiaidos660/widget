@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo Widget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>body { min-height: 200vh; }</style>
+</head>
+<body>
+  <div id="widget-root"></div>
+  <!-- Подключаем Vue UMD до виджета -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <!-- Вариант 1: data-project-slug -->
+  <script src="./widget.umd.v1.0.0.js" data-project-slug="crm-v2"></script>
+  <!-- Вариант 2: window.FEEDBACK_CONFIG -->
+  <!--
+  <script>
+    window.FEEDBACK_CONFIG = { projectSlug: 'landing-2025' }
+  </script>
+  <script src="./widget.umd.v1.0.0.js"></script>
+  -->
+  <script>
+    if (window.Widget && typeof window.Widget.default === 'function') {
+      window.Widget.default('#widget-root');
+    }
+  </script>
+</body>
+</html>
