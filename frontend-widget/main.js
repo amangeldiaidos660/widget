@@ -41,6 +41,19 @@ window.addEventListener('unhandledrejection', (e) => {
 export const WIDGET_VERSION = '1.0.0';
 
 export default function mountWidget(selector = '#widget-root') {
+  // Подключаем стили виджета, если не подключены
+  (function(){
+    var cssId = 'widget-feedback-css';
+    if (!document.getElementById(cssId)) {
+      var link = document.createElement('link');
+      link.id = cssId;
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = './widget-feedback.css';
+      document.head.appendChild(link);
+    }
+  })();
+
   initProjectSlug();
   let el = document.querySelector(selector);
   if (!el) {

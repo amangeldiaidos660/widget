@@ -93,35 +93,3 @@ const submit = async () => {
 };
 </script>
 
-<style scoped>
-.feedback-modal-backdrop {
-  position: fixed !important;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5) !important;
-  z-index: 2147483647 !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.feedback-modal-dialog {
-  max-width: 700px !important;
-  width: 100%;
-}
-.feedback-modal-content {
-  border-radius: 12px !important;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
-}
-.feedback-modal-header, .feedback-modal-footer {
-  background: #f8f9fa !important;
-}
-.btn-close {
-  background: none !important;
-  border: none !important;
-  font-size: 1.5rem !important;
-  opacity: 0.7 !important;
-}
-.btn-close:hover {
-  opacity: 1 !important;
-}
-</style>
