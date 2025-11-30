@@ -64,8 +64,8 @@ const createProjectHandler = async () => {
     if (data.slug) {
       let widgetHost = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
         ? 'http://localhost:3000/widget.umd.v1.0.0.js'
-        : 'https://feedback.agency.ru/widget.umd.v1.0.0.js';
-      script.value = `<script src=\"${widgetHost}\" data-project-slug=\"${data.slug}\">`;
+        : 'https://neurocity.app/widget.umd.v1.0.0.js';
+      script.value = `<script src=\"${widgetHost}\" data-project-slug=\"${data.slug}\"></script>`;
     } else {
       error.value = data.detail || JSON.stringify(data)
     }
