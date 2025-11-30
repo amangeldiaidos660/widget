@@ -65,7 +65,7 @@ const createProjectHandler = async () => {
       let widgetHost = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
         ? 'http://localhost:3000/widget.umd.v1.0.0.js'
         : 'https://neurocity.app/widget.umd.v1.0.0.js';
-      script.value = `<script src=\"https://unpkg.com/vue@3/dist/vue.global.prod.js\"></script>\n<script src=\"${widgetHost}\" data-project-slug=\"${data.slug}\"></script>`;
+      script.value = `<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>\n<script src="${widgetHost}" data-project-slug="${data.slug}"></script>`;
     } else {
       error.value = data.detail || JSON.stringify(data)
     }
