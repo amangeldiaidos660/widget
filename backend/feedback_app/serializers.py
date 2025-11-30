@@ -102,7 +102,8 @@ class TicketCreateSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = [
             'project_slug', 'author_name', 'author_email', 'author_login',
-            'description', 'page_url', 'user_agent', 'screen_resolution'
+            'description', 'page_url', 'user_agent', 'screen_resolution',
+            'console_logs', 'network_errors', 'js_errors'  # <-- добавить эти поля
         ]
     
     def validate_project_slug(self, value):

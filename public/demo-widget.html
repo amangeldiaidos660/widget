@@ -1,29 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Demo Widget</title>
+  <title>Тест виджета — с реальными ошибками</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>body { min-height: 200vh; }</style>
+  <style>
+    body { min-height: 200vh; font-family: sans-serif; padding: 20px; }
+    .error-btn { padding: 12px 20px; margin: 10px; font-size: 16px; cursor: pointer; }
+  </style>
 </head>
 <body>
+
+  <h1>Тестируем сбор ошибок в виджете</h1>
+  <p>Нажми на кнопки — будут ошибки → потом отправь заявку через виджет</p>
+
+  <button class="error-btn" onclick="console.error('Критическая ошибка в компоненте Header!')">1. console.error</button><br>
+  <button class="error-btn" onclick="console.warn('Предупреждение: устаревший API')">2. console.warn</button><br>
+  <button class="error-btn" onclick="undefinedVariable.xyz()">3. JS ReferenceError (кликни!)</button><br>
+  <button class="error-btn" onclick="fetch('https://httpstat.us/404').catch(()=>{})">4. Сетевая ошибка 404</button><br>
+  <button class="error-btn" onclick="Promise.reject(new Error('Необработанный промис!'))">5. unhandledrejection</button><br>
+  <button class="error-btn" onclick="setTimeout(() => { throw new Error('Ошибка через 2 сек!') }, 2000)">6. Ошибка в setTimeout</button>
+
+  <!-- Виджет -->
   <div id="widget-root"></div>
-  <!-- Подключаем Vue UMD до виджета -->
+
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-  <!-- Вариант 1: data-project-slug -->
-  <!-- <script src="./widget.umd.v1.0.0.js" data-project-slug="crm-v2"></script> -->
-   <script src="http://localhost:3000/widget.umd.v1.0.0.js" data-project-slug="new2"></script>
-  <!-- Вариант 2: window.FEEDBACK_CONFIG -->
-  <!--
+  <script src="http://localhost:3000/widget.umd.v1.0.0.js" data-project-slug="new2"></script>
+
   <script>
-    window.FEEDBACK_CONFIG = { projectSlug: 'landing-2025' }
-  </script>
-  <script src="./widget.umd.v1.0.0.js"></script>
-  -->
-  <script>
+    // Автомонтирование (на случай, если виджет экспортирует по-другому)
     if (window.Widget && typeof window.Widget.default === 'function') {
-      window.Widget.default('#widget-root');
+      window.Widget.default('#widget-root')
     }
   </script>
+
+  <hr>
+  <p><strong>Что делать:</strong></p>
+  <ol>
+    <li>Нажми на все кнопки выше — поломай всё</li>
+    <li>Открой виджет (синяя кнопка справа внизу)</li>
+    <li>Напиши в описании: "Не работает кнопка входа"</li>
+    <li>Нажми «Отправить»</li>
+    <li>Зайди в портал http://localhost:3000 → найди заявку</li>
+    <li>Увидишь ВСЁ: логи, стек-трейсы, сетевые ошибки — без единого действия пользователя!</li>
+  </ol>
+
 </body>
 </html>
