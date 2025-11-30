@@ -25,7 +25,17 @@ SECRET_KEY = 'django-insecure-%62yudc2s1x6!3_#&7j(klqy1a@e#gkdcl^95=94o85qx0ptrs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['api.neurocity.app', 'neurocity.app', 'localhost', '127.0.0.1', '51.20.8.217']
+
+# CSRF trusted origins for admin and API
+CSRF_TRUSTED_ORIGINS = [
+    'https://api.neurocity.app',
+    'https://neurocity.app',
+    'https://localhost',
+    'http://127.0.0.1',
+    'http://51.20.8.217',
+]
 
 
 # Application definition
