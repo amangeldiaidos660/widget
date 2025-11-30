@@ -65,7 +65,7 @@ const submit = async () => {
       js_errors: JSON.stringify(window.__FEEDBACK_JS_ERRORS__ || [])
     };
     console.log('Отправляем payload:', payload);
-    const response = await fetch('http://localhost:8000/api/tickets/', {
+    const response = await fetch('https://api.neurocity.app/api/tickets/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

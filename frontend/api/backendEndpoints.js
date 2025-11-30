@@ -1,7 +1,7 @@
 // backendEndpoints.js
 // Главная точка входа для всех API-эндпоинтов и базового URL backend
 
-export const BACKEND_BASE_URL = 'http://localhost:8000'
+export const BACKEND_BASE_URL = 'https://api.neurocity.app'
 
 export const API_ENDPOINTS = {
   // Health check
