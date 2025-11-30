@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-%62yudc2s1x6!3_#&7j(klqy1a@e#gkdcl^95=94o85qx0ptrs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api.neurocity.app', 'neurocity.app', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -95,7 +95,10 @@ DATABASES = {
     }
 }
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # для dev - разрешает все источники
+CORS_ALLOW_ALL_ORIGINS = True  # разрешает все источники (dev/prod)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_METHODS = ['*']
 
 # REST Framework settings
 REST_FRAMEWORK = {
