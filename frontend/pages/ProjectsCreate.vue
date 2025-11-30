@@ -28,7 +28,8 @@
             </form>
             <div v-if="script" class="alert alert-success mt-4">
               <div>Проект создан! Скопируйте этот код для вставки виджета на сайт:</div>
-              <pre class="bg-light p-2 border rounded"><code>{{ script }}</code></pre>
+              <pre class="bg-light p-2 border rounded"><code v-html="script"></code></pre>
+
               <button class="btn btn-outline-secondary btn-sm mt-2" @click="copyScript">Скопировать</button>
             </div>
           </div>
@@ -65,7 +66,9 @@ const createProjectHandler = async () => {
       let widgetHost = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
         ? 'http://localhost:3000/widget.umd.v1.0.0.js'
         : 'https://neurocity.app/widget.umd.v1.0.0.js';
-      script.value = `<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>\n<script src="${widgetHost}" data-project-slug="${data.slug}"></script>`;
+      script.value = `&lt;script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"&gt;&lt;/script&gt;
+      &lt;script src="${widgetHost}" data-project-slug="${data.slug}"&gt;&lt;/script&gt;`;
+
     } else {
       error.value = data.detail || JSON.stringify(data)
     }
