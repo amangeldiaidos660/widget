@@ -35,7 +35,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://neurocity.app',
     'https://localhost',
     'http://127.0.0.1',
-    'http://51.20.8.217',
+    'http://91.243.71.86',
 ]
 
 
@@ -108,8 +108,36 @@ DATABASES = {
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # разрешает все источники (dev/prod)
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_HEADERS = ['*']
-CORS_ALLOW_METHODS = ['*']
+
+CORS_ALLOWED_ORIGINS = [
+    'https://neurocity.app',
+    'https://www.neurocity.app',
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://127.0.0.1:3000',
+    'http://91.243.71.86',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 # REST Framework settings
 REST_FRAMEWORK = {
