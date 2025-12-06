@@ -6,6 +6,15 @@ import { apiGet } from './client.js'
  */
 
 /**
+ * Получить текущего пользователя
+ * @param {string} accessToken - Токен авторизации
+ * @returns {Promise<Object>}
+ */
+export async function getCurrentUser(accessToken) {
+  return apiGet(API_ENDPOINTS.currentUser, accessToken)
+}
+
+/**
  * Получить список staff пользователей (сотрудников)
  * @param {string} accessToken - Токен авторизации
  * @returns {Promise<Array>}
